@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Mummy 💕</title>
+
+<style>
+body{
+  margin:0;
+  font-family:sans-serif;
+  background:linear-gradient(135deg,#ff9ecb,#ff4d88);
+  color:white;
+  text-align:center;
+  overflow-x:hidden;
+}
+
+/* pages */
+.page{
+  display:none;
+  min-height:100vh;
+  padding:20px;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+}
+.active{display:flex;}
+
+/* button */
+button{
+  padding:12px 25px;
+  border:none;
+  border-radius:25px;
+  background:white;
+  color:#ff4d88;
+  font-weight:bold;
+  margin-top:20px;
+}
+
+/* music */
+#musicBtn{
+  position:fixed;
+  top:15px;
+  right:15px;
+  background:white;
+  color:#ff4d88;
+  border-radius:50%;
+  padding:10px;
+}
+
+/* typing */
+#typing{
+  font-size:20px;
+  max-width:300px;
+}
+
+/* glow */
+.glow{
+  font-size:32px;
+  animation:glow 1s infinite alternate;
+}
+@keyframes glow{
+  from{text-shadow:0 0 10px white;}
+  to{text-shadow:0 0 25px pink;}
+}
+
+/* hearts */
+.heart{
+  position:fixed;
+  top:-10px;
+  animation:fall 6s linear infinite;
+}
+@keyframes fall{
+  to{transform:translateY(100vh);}
+}
+
+/* balloons */
+.balloon{
+  position:fixed;
+  bottom:-50px;
+  animation:rise 8s linear infinite;
+}
+@keyframes rise{
+  to{transform:translateY(-120vh);}
+}
+
+/* confetti */
+.confetti{
+  position:fixed;
+  width:6px;
+  height:6px;
+  background:white;
+  top:0;
+  animation:fall 3s linear;
+}
+</style>
+</head>
+
+<body>
+
+<audio id="music" src="your-music.mp3"></audio>
+<button id="musicBtn" onclick="toggleMusic()">🎶</button>
+
+<!-- PAGE 1 -->
+<div class="page active" id="p1">
+  <h1 class="glow">Happy Birthday Mummy Ji 💕</h1>
+  <p id="sub"></p>
+  <button onclick="next(2)">Enter 🎀</button>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page" id="p2">
+  <h1>🎂 Cake Ceremony 🎂</h1>
+
+  <div id="cake" style="font-size:100px;">🎂</div>
+
+  <button onclick="cutCake()">Cut Cake 🔪</button>
+  <p id="cakeMsg"></p>
+
+  <button onclick="next(3)">Next 💕</button>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page" id="p3">
+  <h1>💌 Message</h1>
+  <p id="typing"></p>
+  <button onclick="next(4)">Memories 🎥</button>
+</div>
+
+<!-- PAGE 4 -->
+<div class="page" id="p4">
+  <h1>🎬 Memories</h1>
+  <video controls width="90%">
+    <source src="your-video.mp4">
+  </video>
+  <button onclick="next(5)">Final 🎁</button>
+</div>
+
+<!-- PAGE 5 -->
+<div class="page" id="p5">
+  <h1 class="glow">I Love You Mummy 💕</h1>
+</div>
+
+<script>
+function next(n){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('p'+n).classList.add('active');
+
+  if(n==3) startTyping();
+}
+
+/* typing */
+function startTyping(){
+  let text="Mummy ji aap meri life ka sabse important hissa ho 💖\n\nAap meri strength ho 💕\n\nThank you for everything ❤️";
+  let i=0;
+  let el=document.getElementById("typing");
+  el.innerHTML="";
+  function t(){
+    if(i<text.length){
+      el.innerHTML+= text.charAt(i)=="\n"?"<br>":text.charAt(i);
+      i++;
+      setTimeout(t,35);
+    }
+  }
+  t();
+}
+
+/* cake cut */
+function cutCake(){
+  document.getElementById("cake").innerHTML="🍰";
+  document.getElementById("cakeMsg").innerHTML="🎉 Happy Birthday Mummy 💕";
+
+  // confetti
+  for(let i=0;i<50;i++){
+    let c=document.createElement("div");
+    c.className="confetti";
+    c.style.left=Math.random()*100+"vw";
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),3000);
+  }
+}
+
+function toggleMusic(){
+  let m=document.getElementById("music");
+  m.paused?m.play():m.pause();
+}
+
+/* hearts */
+setInterval(()=>{
+  let h=document.createElement("div");
+  h.innerHTML="💗";
+  h.className="heart";
+  h.style.left=Math.random()*100+"vw";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),6000);
+},600);
+
+/* balloons */
+setInterval(()=>{
+  let b=document.createElement("div");
+  b.innerHTML="🎈";
+  b.className="balloon";
+  b.style.left=Math.random()*100+"vw";
+  document.body.appendChild(b);
+  setTimeout(()=>b.remove(),8000);
+},2000);
+</script>
+
+</body>
+</html>
